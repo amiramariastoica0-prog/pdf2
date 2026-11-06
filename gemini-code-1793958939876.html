@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apuntes de Tecnología - Resumen del Documento</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f9;
+      --card-bg: #ffffff;
+      --text-color: #333333;
+      --accent-python: #3776ab;
+      --accent-html: #e34f26;
+      --accent-cpp: #00599c;
+      --accent-memorias: #2e7d32;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .nav-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      transition: opacity 0.2s ease, transform 0.1s ease;
+    }
+
+    .nav-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .btn-python { background-color: var(--accent-python); }
+    .btn-html { background-color: var(--accent-html); }
+    .btn-cpp { background-color: var(--accent-cpp); }
+    .btn-memorias { background-color: var(--accent-memorias); }
+
+    .content-section {
+      display: none;
+      background-color: var(--card-bg);
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    pre {
+      background-color: #272822;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Resumen de Apuntes de Tecnología</h1>
+    <p>Selecciona una categoría para ver la información guardada:</p>
+  </header>
+
+  <div class="nav-buttons">
+    <button class="nav-btn btn-python" onclick="showSection('python')">Python</button>
+    <button class="nav-btn btn-html" onclick="showSection('html')">HTML y CSS</button>
+    <button class="nav-btn btn-cpp" onclick="showSection('cpp')">C++ / Arduino</button>
+    <button class="nav-btn btn-memorias" onclick="showSection('memorias')">Memorias y Conceptos</button>
+  </div>
+
+  <!-- SECCIÓN PYTHON -->
+  <div id="python" class="content-section active">
+    <h2>Sección Python</h2>
+    <h3>1. Programa en MakeCode Python para micro:bit (Sensor de humedad)</h3>
+    <p>Código para realizar lecturas de humedad con visualización de gota animada en LED:</p>
+    <pre><code>moisture = 0
+x = 0
+y = 0
+
+def on_forever():
+    global moisture, x, y
+    pins.digital_write_pin(DigitalPin.P1, 1)
+    basic.pause(10)
+    moisture = Math.map(pins.analog_read_pin(AnalogPin.P2), 0, 813, 0, 100)
+    pins.digital_write_pin(DigitalPin.P1, 0)
+    
+    if moisture < 50:
+        x = randint(0, 4)
+        y = 0
+        for index in range(9):
+            led.plot_brightness(x, y, 255)
+            led.plot_brightness(x, y - 1, 32)
+            led.plot_brightness(x, y - 2, 8)
+            led.plot_brightness(x, y - 3, 2)
+            led.plot_brightness(x, y - 4, 0)
+            y += 1
+            basic.pause(50)
+    else:
+        basic.pause(1000)
+
+basic.forever(on_forever)</code></pre>
+
+    <h3>2. Tipos de Datos y Operaciones (Capítulo 2)</h3>
+    <ul>
+      <li><strong>Tipos básicos:</strong> Enteros (<code>int</code>), punto flotante (<code>float</code>) y cadenas (<code>str</code>).</li>
+      <li><strong>Entrada de datos:</strong> La función <code>input()</code> devuelve texto, que debe ser convertido a número con <code>int()</code> o <code>float()</code> para operaciones.</li>
+      <li><strong>Ejemplo práctico de salario:</strong></li>
+    </ul>
+    <pre><code># Cálculo de salario
+nombre = input('¿Cómo te llamas?\n')
+horas = int(input('Introduce las horas trabajadas: '))
+tarifa = float(input('Introduce la tarifa por hora: '))
+
+salario_bruto = horas * tarifa
+horas_pares = (horas % 2 == 0)
+
+print('¡Hola,', nombre + '!')
+print('Tu salario bruto es:', salario_bruto)
+print('¿El número de horas trabajadas es par?', horas_pares)</code></pre>
+  </div>
+
+  <!-- SECCIÓN HTML -->
+  <div id="html" class="content-section">
+    <h2>Sección HTML y CSS</h2>
+    <h3>1. Estructura y Conceptos Básicos</h3>
+    <ul>
+      <li><strong>HTML:</strong> Esqueleto de las aplicaciones web.</li>
+      <li><strong>CSS:</strong> Controla el diseño, colores y estilos visuales.</li>
+      <li><strong>JavaScript:</strong> Añade interactividad y mejoras funcionales.</li>
+    </ul>
+
+    <h3>2. Ejemplo de Tienda Básica en HTML</h3>
+    <p>Código básico presentado en las notas para una tienda interactiva:</p>
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Tienda de Ropa&lt;/title&gt;
+&lt;/head&gt;
+&lt;body style="font-family:sans-serif; text-align:center; padding:50px;"&gt;
+  &lt;h1&gt;MODA SIMPLE&lt;/h1&gt;
+  &lt;p&gt;Camiseta Básica - 15€ | Pantalón Denim - 30€ | Chaqueta - 45€&lt;/p&gt;
+  &lt;button onclick="alert('¡Gracias por tu compra!')"&gt;Comprar&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  </div>
+
+  <!-- SECCIÓN C++ -->
+  <div id="cpp" class="content-section">
+    <h2>Sección C++ / Arduino</h2>
+    <h3>Práctica con Sensor de Humedad de Suelo</h3>
+    <p>Código documentado para medir el nivel de humedad y mostrarlo mediante una barra de LEDs conectada en los pines 8 al 12:</p>
+    <pre><code>int moisture = 0;
+
+void setup() {
+  pinMode(A0, OUTPUT); // Alimentación del sensor
+  pinMode(A1, INPUT);  // Lectura del sensor
+  Serial.begin(9600);
+
+  // Configuración de la barra de LEDs
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
+}
+
+void loop() {
+  // Encender el sensor solo para tomar la lectura (evita corrosión)
+  digitalWrite(A0, HIGH);
+  delay(10);
+  moisture = analogRead(A1);
+  digitalWrite(A0, LOW);
+
+  Serial.println(moisture);
+
+  // Apagar todos los LEDs de la barra
+  digitalWrite(8, LOW);
+  digitalWrite(9, LOW);
+  digitalWrite(10, LOW);
+  digitalWrite(11, LOW);
+  digitalWrite(12, LOW);
+
+  // Encender LED según la escala de humedad
+  if (moisture < 200) {
+    digitalWrite(12, HIGH);
+  } else if (moisture < 400) {
+    digitalWrite(11, HIGH);
+  } else if (moisture < 600) {
+    digitalWrite(10, HIGH);
+  } else if (moisture < 800) {
+    digitalWrite(9, HIGH);
+  } else {
+    digitalWrite(8, HIGH);
+  }
+
+  delay(100);
+}</code></pre>
+  </div>
+
+  <!-- SECCIÓN MEMORIAS Y CONCEPTOS -->
+  <div id="memorias" class="content-section">
+    <h2>Sección Memorias, Bajo Nivel y Conceptos</h2>
+    <h3>1. Debugging (Depuración)</h3>
+    <p>Es el proceso de buscar, encontrar y solucionar errores ("bugs") en el código[cite: 1]. Sus pasos principales son: reproducir el error, localizar el fallo, analizar la causa, corregir el código y probar la solución[cite: 1].</p>
+
+    <h3>2. Lenguaje Ensamblador y Lenguaje Máquina</h3>
+    <ul>
+      <li><strong>Ensamblador:</strong> Lenguaje de bajo nivel que sirve de puente directo entre el código fuente y las instrucciones de máquina de la CPU[cite: 3].</li>
+      <li><strong>Ejemplo AVR (Arduino Uno - ATmega328P):</strong> Control de atenuación (fade) con PWM en el pin 9 modificando directamente el registro <code>OCR1A</code>[cite: 2].</li>
+      <li><strong>Traducción a Hexadecimal y Binario:</strong>
+        <pre><code>sbi 0x04, 1   -> Hex: 9A 21 -> Binario: 1001 1010 0010 0001
+clr r16       -> Hex: 27 00 -> Binario: 0010 0111 0000 0000</code></pre>
+      </li>
+    </ul>
+
+    <h3>3. Álgebra de Boole y George Boole</h3>
+    <p>George Boole unió la lógica filosófica con las matemáticas, reduciendo las operaciones a valores binarios: 1 (Verdadero) y 0 (Falso)[cite: 11]. Este sistema es la base del procesamiento de información en microchips[cite: 11].</p>
+
+    <h3>4. Conversión Binario a Decimal</h3>
+    <p>Ejemplo documentado: El número binario <code>11110010</code> equivale al decimal <code>242</code>[cite: 4]:</p>
+    <p><code>128 + 64 + 32 + 16 + 0 + 0 + 2 + 0 = 242</code>[cite: 4]</p>
+  </div>
+
+  <script>
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
